@@ -1,0 +1,48 @@
+<h3>This account belongs to</h3>
+<h2><%= @user.username %></h2>
+<hr>
+
+<%= link_to "Create Loan", new_loan_path %><br>
+<%= link_to "Create Deposit", new_deposit_path %>
+<hr>
+<h4>Total Amount</h4>
+	<% total_deposit = 0 %>
+	<% total_loan  = 0 %>
+	<% @loans.each do |loan| %>
+		<% if loan.user == current_user%>
+			<% total_loan += loan.credit %>
+		<% end %>
+	<% end %>
+
+	<% @deposits.each do |deposit| %>
+		<% if deposit.user == current_user %>
+			<% total_deposit += deposit.debit %>
+		<% end %>
+	<% end %>
+
+	Rs <%= total_deposit - total_loan %>
+<hr>
+
+
+<h4>All Loan </h4>
+<% @loans.each do |loan| %>
+	<% if loan.user == current_user %>
+		<b><%= loan.created_at.strftime("%B %e, %Y at %H:%M:%S") %>: </b>
+		 <i>Rs.<%= loan.credit %></i> by
+		 <u> <%= loan.user.username %></u> <br>
+	<% end %>
+<% end %>
+
+<hr>
+
+<h4>All Deposits </h4>
+<% @deposits.each do |deposit| %>
+	<% if deposit.user == current_user %>
+		<b><%= deposit.created_at.strftime("%B %e, %Y at %H:%M:%S") %>: </b>
+		 <i>Rs.<%= deposit.debit %></i> by
+		 <u> <%= deposit.user.username %></u> <br>
+	<% end %>
+<% end %>
+
+<hr>
+<%= link_to "Back", accounts_path %>

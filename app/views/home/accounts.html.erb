@@ -1,0 +1,38 @@
+
+	<table cellpadding="10px">
+		<tr>
+			<th>Account Holder</th>
+			<th>Amount</th>
+			<th></th>
+		</tr>
+
+		<% @users.each do |user| %>
+			<tr>
+				<% if user == current_user %>
+
+				<td><%= user.username %></td>
+				<td>
+					<% total_deposit = 0 %>
+					<% total_loan  = 0 %>
+					<% @loans.each do |loan| %>
+						<% if loan.user == current_user%>
+						<% total_loan += loan.credit %>
+						<% end %>
+					<% end %>
+
+					<% @deposits.each do |deposit| %>
+					<% if deposit.user == current_user %>
+						<% total_deposit += deposit.debit %>
+					<% end %>
+					<% end %>
+					<%= total_deposit - total_loan %>
+				</td>
+				<td><%= link_to "View", account_path(user) %></td>
+				<% end %>
+			</tr>
+		<% end %>
+	</table>
+<hr>
+<%= link_to "Back", root_path %>
+
+

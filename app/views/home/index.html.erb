@@ -1,0 +1,9 @@
+<% if !current_user %>
+	<%= link_to "Sign In", new_user_registration_path %>
+	<%= link_to "Log In", new_user_session_path %>
+<% else %>
+	<h3><%= current_user.username %>'s Bank Account </h3>
+	<%= link_to "View Account", accounts_path %>
+	<hr>
+	<%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
+<% end %>
